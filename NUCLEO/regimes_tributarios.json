@@ -1,0 +1,20 @@
+{
+    "SIMPLES_NACIONAL": {
+      "descricao": "Simples Nacional",
+      "permite_credito_icms": false,
+      "obriga_sped_fiscal": false,
+      "impostos": ["DAS"]
+    },
+    "LUCRO_PRESUMIDO": {
+      "descricao": "Lucro Presumido",
+      "permite_credito_icms": true,
+      "obriga_sped_fiscal": true,
+      "impostos": ["ICMS", "ISS", "PIS", "COFINS", "IRPJ", "CSLL"]
+    },
+    "LUCRO_REAL": {
+      "descricao": "Lucro Real",
+      "permite_credito_icms": true,
+      "obriga_sped_fiscal": true,
+      "impostos": ["ICMS", "IPI", "PIS", "COFINS", "IRPJ", "CSLL"]
+    }
+  }

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Painel do Contador</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:#f4f6f8;
+margin:40px;
+}
+
+.card{
+background:white;
+padding:20px;
+margin-bottom:20px;
+border-radius:8px;
+box-shadow:0 2px 6px rgba(0,0,0,0.1);
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+}
+
+th, td{
+padding:10px;
+border-bottom:1px solid #ddd;
+text-align:left;
+}
+
+th{
+background:#f0f0f0;
+}
+
+.ok{
+color:green;
+font-weight:bold;
+}
+
+.erro{
+color:red;
+font-weight:bold;
+}
+
+.duplicado{
+color:orange;
+font-weight:bold;
+}
+
+</style>
+</head>
+
+<body>
+
+<h1>Painel do Contador</h1>
+
+<div class="card">
+
+<h2>Resumo</h2>
+
+<p>Total documentos: {{ resumo.total }}</p>
+<p>OK: {{ resumo.ok }}</p>
+<p>Erros: {{ resumo.erro }}</p>
+<p>Duplicados: {{ resumo.duplicado }}</p>
+
+</div>
+
+<div class="card">
+
+<h2>Documentos Processados</h2>
+
+<table>
+
+<tr>
+<th>Documento</th>
+<th>Status</th>
+</tr>
+
+{% for d in documentos %}
+
+<tr>
+<td>{{ d.documento }}</td>
+
+<td
+class="
+{% if d.status == 'OK' %}
+ok
+{% elif d.status == 'ERRO' %}
+erro
+{% elif d.status == 'DUPLICADO' %}
+duplicado
+{% endif %}
+"
+>
+{{ d.status }}
+</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+</div>
+
+</body>
+</html>

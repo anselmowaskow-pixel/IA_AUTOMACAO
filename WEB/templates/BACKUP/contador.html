@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Painel do Contador</title>
+<style>
+body { font-family: Arial; }
+table { border-collapse: collapse; width: 100%; }
+th, td { border: 1px solid #ccc; padding: 6px; }
+th { background: #eee; }
+.ok { background: #c8f7c5; }
+.erro { background: #f7c5c5; }
+.aviso { background: #fff3b0; }
+</style>
+</head>
+<body>
+
+<h2>Painel do Contador</h2>
+
+<input type="text" id="busca" placeholder="Buscar documento">
+<button onclick="filtrar()">Buscar</button>
+<button onclick="alert('Inserir documento - proximo passo')">+ Inserir</button>
+
+<table id="tabela">
+<thead>
+<tr>
+<th>Empresa</th>
+<th>Arquivo</th>
+<th>Tipo</th>
+<th>Status</th>
+<th>Data</th>
+<th>Origem</th>
+<th>Acao</th>
+</tr>
+</thead>
+<tbody></tbody>
+</table>
+
+<script src="/static/contador.js"></script>
+</body>
+</html>

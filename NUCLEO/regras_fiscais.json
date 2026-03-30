@@ -1,0 +1,80 @@
+{
+  "versao": "2026.1",
+  "descricao": "Camada 2 - Regras Fiscais Canonicas por Evento e Regime",
+  "atualizado_em": "2026-01-22",
+  "fonte": "IA_AUTOMACAO | NUCLEO",
+
+  "NFE_ENTRADA": {
+    "SIMPLES_NACIONAL": {
+      "exige_xml": true,
+      "exige_cfop": true,
+      "exige_cnpj_emitente": true,
+      "permite_credito": false,
+      "bloqueia_processamento_se_incompleto": true
+    },
+
+    "LUCRO_PRESUMIDO": {
+      "exige_xml": true,
+      "exige_cfop": true,
+      "exige_cnpj_emitente": true,
+      "permite_credito": true,
+      "bloqueia_processamento_se_incompleto": true
+    },
+
+    "LUCRO_REAL": {
+      "exige_xml": true,
+      "exige_cfop": true,
+      "exige_cnpj_emitente": true,
+      "permite_credito": true,
+      "bloqueia_processamento_se_incompleto": true
+    }
+  },
+
+  "NFE_SAIDA": {
+    "SIMPLES_NACIONAL": {
+      "exige_xml": true,
+      "exige_cfop": true,
+      "exige_valor_total": true,
+      "exige_destinatario": true,
+      "bloqueia_processamento_se_incompleto": true
+    },
+
+    "LUCRO_PRESUMIDO": {
+      "exige_xml": true,
+      "exige_cfop": true,
+      "exige_valor_total": true,
+      "exige_destinatario": true,
+      "bloqueia_processamento_se_incompleto": true
+    },
+
+    "LUCRO_REAL": {
+      "exige_xml": true,
+      "exige_cfop": true,
+      "exige_valor_total": true,
+      "exige_destinatario": true,
+      "bloqueia_processamento_se_incompleto": true
+    }
+  },
+
+  "DOCUMENTOS_GERAIS": {
+    "todos": {
+      "exige_hash": true,
+      "exige_data_entrada": true,
+      "exige_origem": true,
+      "exige_destino": true,
+      "registrar_evento": true
+    }
+  },
+
+  "REFORMA_TRIBUTARIA_IBS_CBS": {
+    "ativo": false,
+    "observacao": "Estrutura preparada para ativacao futura de IBS/CBS",
+    "IBS": {
+      "exige_base_calculo": true,
+      "exige_destino_consumo": true
+    },
+    "CBS": {
+      "exige_base_calculo": true
+    }
+  }
+}

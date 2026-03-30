@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Etapas da Empresa</title>
+<style>
+body { font-family: Arial; }
+.ok { color: green; }
+.andamento { color: orange; }
+.bloqueado { color: red; }
+</style>
+</head>
+<body>
+
+<h2>{{ empresa.empresa }} — Etapas</h2>
+
+<table>
+<tr><th>Etapa</th><th>Status</th></tr>
+
+{% for etapa, status in empresa.etapas.items() %}
+<tr>
+  <td>{{ etapa }}</td>
+  <td class="
+    {% if status == 'OK' %}ok
+    {% elif status == 'EM_ANDAMENTO' %}andamento
+    {% elif status == 'BLOQUEADO' %}bloqueado
+    {% endif %}
+  ">
+    {{ status }}
+  </td>
+</tr>
+{% endfor %}
+
+</table>
+
+<br>
+<a href="/">⬅ Voltar</a>
+
+</body>
+</html>

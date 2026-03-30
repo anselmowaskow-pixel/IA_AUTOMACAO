@@ -1,0 +1,254 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Gerente Empresarial Digital</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:#f4f6f9;
+margin:0;
+}
+
+header{
+background:#111827;
+color:white;
+padding:20px;
+font-size:22px;
+}
+
+.container{
+max-width:1200px;
+margin:auto;
+padding:20px;
+}
+
+.cards{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+gap:15px;
+margin-bottom:25px;
+}
+
+.card{
+background:white;
+padding:20px;
+border-radius:10px;
+box-shadow:0 2px 8px rgba(0,0,0,0.08);
+text-align:center;
+}
+
+.card span{
+font-size:28px;
+font-weight:bold;
+display:block;
+margin-top:5px;
+}
+
+.ok{color:#16a34a;}
+.erro{color:#dc2626;}
+.dup{color:#f59e0b;}
+.ileg{color:#7c3aed;}
+.nf{color:#475569;}
+
+.filtros{
+margin-bottom:20px;
+}
+
+.filtros a{
+text-decoration:none;
+}
+
+.filtros button{
+padding:8px 14px;
+margin-right:8px;
+border:none;
+border-radius:6px;
+background:#e5e7eb;
+cursor:pointer;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+background:white;
+border-radius:10px;
+overflow:hidden;
+}
+
+th{
+background:#111827;
+color:white;
+padding:12px;
+}
+
+td{
+padding:10px;
+border-bottom:1px solid #e5e7eb;
+}
+
+.status{
+font-weight:bold;
+}
+
+.btn{
+background:#2563eb;
+border:none;
+padding:6px 10px;
+color:white;
+border-radius:5px;
+cursor:pointer;
+}
+.badge{
+padding:5px 10px;
+border-radius:20px;
+font-size:12px;
+font-weight:bold;
+display:inline-block;
+}
+
+.badge-ok{
+background:#dcfce7;
+color:#166534;
+}
+
+.badge-erro{
+background:#fee2e2;
+color:#991b1b;
+}
+
+.badge-dup{
+background:#fef3c7;
+color:#92400e;
+}
+
+.badge-ileg{
+background:#ede9fe;
+color:#5b21b6;
+}
+
+.badge-analise{
+background:#e0f2fe;
+color:#075985;
+}
+
+.badge-neutro{
+background:#e5e7eb;
+color:#374151;
+}
+</style>
+
+</head>
+
+<body>
+
+<header>
+GERENTE CONTÁBIL DIGITAL — EMPRESA
+</header>
+
+<div class="container">
+
+<div class="cards">
+
+<div class="card">
+Total
+<span>{{ resumo.total }}</span>
+</div>
+
+<div class="card ok">
+OK
+<span>{{ resumo.ok }}</span>
+</div>
+
+<div class="card erro">
+Erros
+<span>{{ resumo.erro }}</span>
+</div>
+
+<div class="card dup">
+Duplicados
+<span>{{ resumo.duplicado }}</span>
+</div>
+
+<div class="card ileg">
+Ilegível
+<span>{{ resumo.ilegivel }}</span>
+</div>
+
+<div class="card nf">
+Não Fiscal
+<span>{{ resumo.nao_fiscal }}</span>
+</div>
+
+</div>
+
+<div class="filtros">
+
+<a href="/?periodo=todos"><button>Todos</button></a>
+<a href="/?periodo=hoje"><button>Hoje</button></a>
+<a href="/?periodo=semana"><button>Semana</button></a>
+<a href="/?periodo=mes"><button>Mês</button></a>
+
+</div>
+
+<table>
+
+<tr>
+<th>Data</th>
+<th>Hora</th>
+<th>Documento</th>
+<th>Operação</th>
+<th>Status</th>
+<th>Ação</th>
+<th>Abrir</th>
+</tr>
+
+{% for d in documentos %}
+
+<tr>
+
+<td>{{ d.data }}</td>
+<td>{{ d.hora }}</td>
+<td>{{ d.documento }}</td>
+<td>{{ d.operacao }}</td>
+
+<td>
+<span class="badge 
+{% if d.status == 'OK' %}badge-ok
+{% elif d.status == 'ERRO' %}badge-erro
+{% elif d.status == 'DUPLICADO' %}badge-dup
+{% elif d.status == 'ILEGIVEL' %}badge-ileg
+{% elif d.status == 'ANALISAR' %}badge-analise
+{% else %}badge-neutro
+{% endif %}
+">
+{{ d.status }}
+</span>
+</td>
+
+<td>
+{{ d.acao }}
+</td>
+
+<td>
+<a href="/abrir/{{ d.arquivo }}" target="_blank">
+<button class="btn">Abrir</button>
+</a>
+</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+</div>
+
+</body>
+</html>

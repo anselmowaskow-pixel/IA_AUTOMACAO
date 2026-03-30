@@ -1,0 +1,8 @@
+{
+    "ICMS": { "ativo": true },
+    "ISS": { "ativo": true },
+    "PIS": { "ativo": true },
+    "COFINS": { "ativo": true },
+    "IBS": { "ativo": false, "fase": "TRANSICAO" },
+    "CBS": { "ativo": false, "fase": "TRANSICAO" }
+  }

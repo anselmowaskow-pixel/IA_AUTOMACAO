@@ -1,0 +1,11 @@
+STORAGE/
+LOGS/
+BACKUP_ADMIN/
+*.pdf
+*.jpg
+*.png
+*.csv
+__pycache__/
+*.log
+*.sqlite
+.env

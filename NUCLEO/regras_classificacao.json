@@ -1,0 +1,40 @@
+﻿{
+  "fiscal_nfe": {
+    "keywords": [
+      "DANFE",
+      "Nota Fiscal Eletrônica",
+      "Modelo 55",
+      "Chave de Acesso",
+      "ICMS"
+    ],
+    "min_score": 3,
+    "tipo_documento": "FISCAL",
+    "subtipo": "NFE"
+  },
+
+  "fiscal_servico": {
+    "keywords": [
+      "RECIBO DE FRETE",
+      "SERVICO DE TRANSPORTE",
+      "SERVIÇO DE TRANSPORTE",
+      "Valor base para tributação",
+      "INSS 11%",
+      "IRRF",
+      "CNPJ"
+    ],
+    "min_score": 3,
+    "tipo_documento": "FISCAL",
+    "subtipo": "SERVICO_TRANSPORTE"
+  },
+
+  "nao_fiscal": {
+    "keywords": [
+      "CNH",
+      "Contrato",
+      "Declaração"
+    ],
+    "min_score": 2,
+    "tipo_documento": "NAO_FISCAL",
+    "subtipo": "OUTRO"
+  }
+}

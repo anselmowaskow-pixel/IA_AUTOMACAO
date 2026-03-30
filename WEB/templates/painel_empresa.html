@@ -1,0 +1,245 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Painel Fiscal - IA_AUTOMACAO</title>
+
+<style>
+body {
+    font-family: Arial;
+    background: #0f172a;
+    color: white;
+    margin: 0;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+}
+
+.cards {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.card {
+    flex: 1;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 20px;
+}
+
+.total { background: #1e293b; }
+.ok { background: #16a34a; }
+.erro { background: #dc2626; }
+.atencao { background: #f59e0b; }
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #1e293b;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background: #020617;
+}
+
+tr:nth-child(even) {
+    background: #0f172a;
+}
+
+.status-ok { color: #22c55e; }
+.status-erro { color: #ef4444; }
+.status-atencao { color: #f59e0b; }
+
+td {
+    font-size: 14px;
+}
+
+.card {
+    font-weight: bold;
+}
+
+th {
+    font-size: 14px;
+    text-transform: uppercase;
+}
+
+table {
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+tr:hover {
+    background: #334155;
+}
+
+tr.erro-linha {
+    background: #7f1d1d !important;
+}
+
+tr.duplicado-linha {
+    background: #78350f !important;
+}
+
+a {
+    color: #38bdf8;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+</style>
+</head>
+
+<body>
+
+<h1>📊 Painel Fiscal - Empresa</h1>
+
+<div style="margin-bottom:15px;">
+    <button onclick="filtro='dia'; carregarPainel()">Hoje</button>
+    <button onclick="filtro='semana'; carregarPainel()">Semana</button>
+    <button onclick="filtro='mes'; carregarPainel()">Mês</button>
+</div>
+
+<div class="cards">
+    <div class="card total">Total: <span id="total">0</span></div>
+    <div class="card ok">OK: <span id="ok">0</span></div>
+    <div class="card erro">Erro: <span id="erro">0</span></div>
+    <div class="card erro">Ilegível: <span id="ilegivel">0</span></div>
+    <div class="card atencao">Duplicado: <span id="duplicado">0</span></div>
+    <div class="card atencao">Não Fiscal: <span id="nao_fiscal">0</span></div>
+</div>
+
+<table>
+<thead>
+<tr>
+<th>Data</th>
+<th>Hora</th>
+<th>Documento</th>
+<th>Tipo</th>
+<th>Operação</th>
+<th>Status</th>
+<th>Ação</th>
+<th>Observação</th>
+<th>Valor</th>
+<th>Abrir</th>
+</tr>
+</thead>
+
+<tbody id="tabela"></tbody>
+</table>
+
+<script>
+
+let filtro = "dia";
+
+async function carregarPainel() {
+
+    // =========================
+    // RESUMO
+    // =========================
+    const resumo = await fetch("http://127.0.0.1:5000/api/resumo")
+    const dadosResumo = await resumo.json()
+
+    document.getElementById("ok").innerText = dadosResumo.ok
+    document.getElementById("erro").innerText = dadosResumo.erro
+    document.getElementById("ilegivel").innerText = dadosResumo.ilegivel
+    document.getElementById("duplicado").innerText = dadosResumo.duplicado
+    document.getElementById("nao_fiscal").innerText = dadosResumo.nao_fiscal
+
+
+    // =========================
+    // EVENTOS
+    // =========================
+    const eventos = await fetch("http://127.0.0.1:5000/api/eventos")
+    const dados = await eventos.json()
+
+    const tabela = document.getElementById("tabela")
+    tabela.innerHTML = ""
+
+    dados.reverse()
+
+    dados.forEach(e => {
+
+    const hoje = new Date();
+    const dataEvento = e.data
+        ? new Date(e.data + "T" + (e.hora || "00:00:00"))
+        : new Date();
+
+    let mostrar = true;
+
+    if (filtro === "dia") {
+        const diff = (hoje - dataEvento) / (1000 * 60 * 60);
+        mostrar = diff <= 24;
+    }
+ 
+    if (filtro === "semana") {
+        const diff = (hoje - dataEvento) / (1000 * 60 * 60 * 24);
+        mostrar = diff <= 7;
+    }
+
+    if (filtro === "mes") {
+        const diff = (hoje - dataEvento) / (1000 * 60 * 60 * 24);
+        mostrar = diff <= 30;
+    }
+
+    if (!mostrar) return;
+
+        let statusClass = "status-atencao"
+        let linhaClass = ""
+
+        if (e.status === "OK") {
+            statusClass = "status-ok"
+        }
+
+        if (e.status === "ERRO" || e.status === "ILEGIVEL") {
+            statusClass = "status-erro"
+            linhaClass = "erro-linha"
+        }
+
+        if (e.status === "DUPLICADO") {
+            linhaClass = "duplicado-linha"
+        }
+        
+        
+        const linha = `
+        <tr class="${linhaClass}">
+            <td>${e.data || "-"}</td>
+            <td>${e.hora || "-"}</td>
+            <td>${e.documento || "-"}</td>
+            <td>${e.tipo || "-"}</td>
+            <td>${e.operacao || "-"}</td>
+            <td class="${statusClass}">${e.status}</td>
+            <td>${e.acao || "-"}</td>
+            <td>${e.observacao || "-"}</td>
+            <td>${e.valor || "-"}</td>
+            <td>
+                <a href="http://127.0.0.1:5000/abrir/${e.arquivo}" target="_blank">📄</a>
+            </td>
+        </tr>
+        `;
+
+        tabela.innerHTML += linha
+    })
+}
+
+// Atualiza automático
+setInterval(carregarPainel, 3000)
+
+// Primeira carga
+carregarPainel()
+
+</script>
+
+</body>
+</html>

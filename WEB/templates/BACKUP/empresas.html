@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Painel do Contador</title>
+  <style>
+    body { font-family: Arial, sans-serif; background:#f4f6f8; }
+    h1 { margin:20px; }
+    table { width:95%; margin:20px; border-collapse:collapse; background:#fff; }
+    th, td { padding:10px; border-bottom:1px solid #ddd; text-align:left; }
+    th { background:#222; color:#fff; }
+    .OK { color:#0a8f08; font-weight:bold; }
+    .PROCESSANDO { color:#c9a300; font-weight:bold; }
+    .ERRO { color:#c40000; font-weight:bold; }
+    .AGUARDANDO { color:#555; font-weight:bold; }
+    button { padding:6px 10px; cursor:pointer; }
+  </style>
+</head>
+<body>
+
+<h1>Painel do Contador</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Entidade</th>
+      <th>Status</th>
+      <th>Etapa</th>
+      <th>Docs OK</th>
+      <th>Docs ERRO</th>
+      <th>Atualizado</th>
+      <th>Acoes</th>
+    </tr>
+  </thead>
+  <tbody id="tabela"></tbody>
+</table>
+
+<script src="/static/empresas.js"></script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+{
+  "status_fiscal": "APROVADO",
+  "erros": [],
+  "dados_nfe": {
+    "numero": "2295",
+    "emitente": "C.T.R. TABACOS LTDA",
+    "cnpj_emitente": "11111111000152",
+    "valor_total": "3450.00"
+  }
+}

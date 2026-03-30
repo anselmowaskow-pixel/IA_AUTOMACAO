@@ -1,0 +1,195 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Painel Fiscal PRO+ — Empresa</title>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f6f9;
+    margin: 0;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+}
+
+.cards {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 140px;
+    text-align: center;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+}
+
+.filtros {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.filtros button {
+    padding: 8px 15px;
+    margin: 0 5px;
+    border: none;
+    background: #111;
+    color: white;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+}
+
+th, td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+}
+
+th {
+    background: #111;
+    color: white;
+}
+
+.btn-abrir {
+    background: green;
+    color: white;
+    padding: 5px 10px;
+    text-decoration: none;
+    border-radius: 4px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>Painel Fiscal PRO+ — Empresa</h1>
+
+<div class="cards">
+    <div class="card"><b>Total Ativo</b><br>{{ cards.total }}</div>
+    <div class="card"><b>Liberações</b><br>{{ cards.liberados }}</div>
+    <div class="card"><b>Pendências</b><br>{{ cards.pendencias }}</div>
+    <div class="card"><b>Erros</b><br>{{ cards.erros }}</div>
+    <div class="card"><b>Duplicados</b><br>{{ cards.duplicados }}</div>
+    <div class="card"><b>Irrelevantes</b><br>{{ cards.irrelevantes }}</div>
+</div>
+
+<div class="filtros">
+    <button onclick="filtrarTotal()">Total</button>
+    <button onclick="filtrarDia()">Dia</button>
+    <button onclick="filtrarSemana()">Semana</button>
+    <button onclick="filtrarMes()">Mês</button>
+</div>
+
+<table>
+<thead>
+<tr>
+    <th>Data/Hora</th>
+    <th>Documento</th>
+    <th>Tipo</th>
+    <th>Status</th>
+    <th>Ação</th>
+    <th>Abrir</th>
+</tr>
+</thead>
+<tbody>
+
+{% for linha in dados %}
+<tr>
+    <td class="data">{{ linha.data_hora }}</td>
+    <td>{{ linha.documento }}</td>
+    <td>{{ linha.tipo }}</td>
+    <td>{{ linha.status }}</td>
+    <td>{{ linha.observacao }}</td>
+    <td>
+        <a class="btn-abrir" href="/abrir/{{ linha.documento }}" target="_blank">Abrir</a>
+    </td>
+</tr>
+{% endfor %}
+
+</tbody>
+</table>
+
+<script>
+
+function parseDataBR(dataTexto) {
+    // formato: 15-02-2026 15:13
+    const partes = dataTexto.split(" ");
+    const data = partes[0].split("-");
+    const hora = partes[1].split(":");
+
+    return new Date(
+        parseInt(data[2]),
+        parseInt(data[1]) - 1,
+        parseInt(data[0]),
+        parseInt(hora[0]),
+        parseInt(hora[1])
+    );
+}
+
+function mostrarLinha(linha, mostrar) {
+    linha.style.display = mostrar ? "" : "none";
+}
+
+function filtrarTotal() {
+    document.querySelectorAll("tbody tr").forEach(l => mostrarLinha(l, true));
+}
+
+function filtrarDia() {
+    const hoje = new Date();
+    hoje.setHours(0,0,0,0);
+
+    document.querySelectorAll("tbody tr").forEach(linha => {
+        const data = parseDataBR(linha.querySelector(".data").innerText);
+        mostrarLinha(linha, data >= hoje);
+    });
+}
+
+function filtrarSemana() {
+    const hoje = new Date();
+    const diaSemana = hoje.getDay();
+    const diff = (diaSemana === 0 ? -6 : 1) - diaSemana;
+
+    const segunda = new Date(hoje);
+    segunda.setDate(hoje.getDate() + diff);
+    segunda.setHours(0,0,0,0);
+
+    const domingo = new Date(segunda);
+    domingo.setDate(segunda.getDate() + 6);
+    domingo.setHours(23,59,59,999);
+
+    document.querySelectorAll("tbody tr").forEach(linha => {
+        const data = parseDataBR(linha.querySelector(".data").innerText);
+        mostrarLinha(linha, data >= segunda && data <= domingo);
+    });
+}
+
+function filtrarMes() {
+    const hoje = new Date();
+
+    const inicio = new Date(hoje.getFullYear(), hoje.getMonth(), 1, 0,0,0);
+    const fim = new Date(hoje.getFullYear(), hoje.getMonth() + 1, 0, 23,59,59);
+
+    document.querySelectorAll("tbody tr").forEach(linha => {
+        const data = parseDataBR(linha.querySelector(".data").innerText);
+        mostrarLinha(linha, data >= inicio && data <= fim);
+    });
+}
+
+</script>
+
+</body>
+</html>

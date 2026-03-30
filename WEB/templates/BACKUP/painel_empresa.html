@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Painel Fiscal – Empresa A</title>
+
+<style>
+body { font-family: Arial; background:#f2f2f2; }
+h2 { margin:10px; }
+.cards { display:flex; gap:10px; margin:10px; }
+.card {
+  flex:1; padding:15px; background:#fff;
+  border-radius:6px; text-align:center;
+  font-size:18px;
+}
+.OK { color:green; font-weight:bold; }
+.Atenção { color:orange; font-weight:bold; }
+.Erro { color:red; font-weight:bold; }
+
+table { width:100%; border-collapse:collapse; background:#fff; }
+th, td { padding:8px; border:1px solid #ccc; font-size:14px; }
+th { background:#333; color:white; }
+</style>
+</head>
+
+<body>
+
+<h2>Painel Fiscal — Empresa A</h2>
+
+<div class="cards">
+  <div class="card">Total<br><b>{{ resumo.total }}</b></div>
+  <div class="card OK">OK<br>{{ resumo.ok }}</div>
+  <div class="card Atenção">Atenção<br>{{ resumo.atencao }}</div>
+  <div class="card Erro">Erros<br>{{ resumo.erros }}</div>
+</div>
+
+<table>
+<tr>
+  <th>Data/Hora</th>
+  <th>Documento</th>
+  <th>Tipo</th>
+  <th>Status</th>
+  <th>Observação</th>
+</tr>
+
+{% for e in eventos %}
+<tr>
+  <td>{{ e.data_hora }}</td>
+  <td>{{ e.documento }}</td>
+  <td>{{ e.tipo }}</td>
+  <td class="{{ e.status }}">{{ e.status }}</td>
+  <td>{{ e.observacao }}</td>
+</tr>
+{% endfor %}
+
+</table>
+
+</body>
+</html>

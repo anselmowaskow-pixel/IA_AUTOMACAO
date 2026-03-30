@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>IA_AUTOMACAO – Controle de Documentos</title>
+<style>
+body { font-family: Arial, sans-serif; background:#f4f6f8; margin:0; }
+header { background:#1f2937; color:#fff; padding:15px 20px; }
+header h1 { margin:0; font-size:22px; }
+.container { padding:20px; }
+.actions { display:flex; gap:10px; margin-bottom:15px; }
+input[type="file"] { padding:6px; }
+input[type="text"] { padding:8px; width:250px; }
+button { padding:8px 14px; background:#2563eb; color:#fff; border:none; cursor:pointer; }
+button:hover { background:#1e40af; }
+table { width:100%; border-collapse:collapse; background:#fff; }
+th, td { padding:12px; border-bottom:1px solid #ddd; text-align:left; }
+th { background:#e5e7eb; }
+.status-ok { color:green; font-weight:bold; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Controle de Documentos – Empresa A</h1>
+</header>
+
+<div class="container">
+
+  <form class="actions" method="GET">
+    <input type="text" name="q" placeholder="Procurar documento..." value="{{ busca }}">
+    <button type="submit">Procurar</button>
+  </form>
+
+  <form class="actions" method="POST" action="/upload" enctype="multipart/form-data">
+    <input type="file" name="arquivo" required>
+    <button type="submit">Inserir Nota</button>
+  </form>
+
+  <table>
+    <tr>
+      <th>Documento</th>
+      <th>Data</th>
+      <th>Tipo</th>
+      <th>Status</th>
+    </tr>
+    {% for d in documentos %}
+    <tr>
+      <td>{{ d.arquivo }}</td>
+      <td>{{ d.data }}</td>
+      <td>{{ d.tipo }}</td>
+      <td class="status-ok">✔ {{ d.status }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+
+</div>
+</body>
+</html>

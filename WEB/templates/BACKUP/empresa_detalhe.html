@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>{{ empresa }} – Documentos</title>
+    <style>
+        body { font-family: Arial; }
+        .ok { color: green; font-weight: bold; }
+        .erro { color: red; font-weight: bold; }
+        .proc { color: orange; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<h2>Empresa: {{ empresa }}</h2>
+
+<form method="post" action="/empresa/{{ empresa }}/upload" enctype="multipart/form-data">
+    <input type="file" name="nota" required>
+    <button type="submit">+ Inserir Nota</button>
+</form>
+
+<br>
+
+<table border="1" width="80%">
+<tr>
+    <th>Arquivo</th>
+    <th>Status</th>
+</tr>
+
+{% for doc in documentos %}
+<tr>
+    <td>{{ doc.arquivo }}</td>
+    <td class="
+        {% if doc.status == 'OK' %}ok
+        {% elif doc.status == 'ERRO' %}erro
+        {% else %}proc{% endif %}">
+        {{ doc.status }}
+    </td>
+</tr>
+{% endfor %}
+
+</table>
+
+<br>
+<a href="/">← Voltar ao Painel</a>
+
+</body>
+</html>

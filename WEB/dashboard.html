@@ -1,0 +1,81 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Gerente Contábil Digital</title>
+
+<style>
+
+body{
+font-family: Arial;
+background:#f4f6f8;
+margin:40px;
+}
+
+h1{
+color:#1f2d3d;
+}
+
+table{
+width:100%;
+border-collapse: collapse;
+background:white;
+}
+
+th,td{
+padding:10px;
+border:1px solid #ddd;
+text-align:left;
+}
+
+th{
+background:#1f2d3d;
+color:white;
+}
+
+.status-ok{
+color:green;
+font-weight:bold;
+}
+
+.status-erro{
+color:red;
+font-weight:bold;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>GERENTE CONTÁBIL DIGITAL — EMPRESA</h1>
+
+<table>
+
+<tr>
+<th>Data</th>
+<th>Hora</th>
+<th>Documento</th>
+<th>Status</th>
+<th>Ação</th>
+</tr>
+
+{% for d in documentos %}
+
+<tr>
+
+<td>{{ d.data }}</td>
+<td>{{ d.hora }}</td>
+<td>{{ d.documento }}</td>
+<td>{{ d.status }}</td>
+<td>{{ d.acao }}</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+</body>
+</html>
