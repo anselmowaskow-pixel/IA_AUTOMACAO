@@ -9,3 +9,21 @@ __pycache__/
 *.log
 *.sqlite
 .env
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Sistema Windows
+Thumbs.db
+
+# IDE
+.vscode/
+
+# Executáveis
+*.exe
+*.dll
+
+# Backup
+*.bak
+*~
